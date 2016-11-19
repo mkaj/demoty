@@ -5,6 +5,7 @@ from random import randint
 TEMPLATE_FILENAME = 'template.jpg'
 TEMPLATE_COORDS = (75, 45, 499, 373)
 PHRASES_FILENAME = 'phrases.txt'
+EXTENSIONS = ['.jpg', '.png']
 
 UPPER_FONT = 'times.ttf'
 LOWER_FONT = 'arial.ttf'
@@ -12,11 +13,17 @@ LOWER_FONT = 'arial.ttf'
 W = 574
 H = 522
 
+def isValidExtension(filename):
+    for extension in EXTENSIONS:
+        if filename.endswith(extension):
+            return True
+    return False
+
 def getRandomImage():
     fileList = []
     for dirpath, dirnames, filenames in os.walk('.'):
         if TEMPLATE_FILENAME in filenames: filenames.remove(TEMPLATE_FILENAME)
-        for filename in [f for f in filenames if f.endswith('.jpg') or f.endswith('.png')]:
+        for filename in [f for f in filenames if isValidExtension(f)]:
             fileList.append(filename)
     return fileList[randint(0, len(fileList) - 1)]
 
