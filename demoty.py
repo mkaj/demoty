@@ -56,4 +56,5 @@ def makeImage():
     
     frame.show()
 
-makeImage()
+if __name__ == '__main__':
+    makeImage()
