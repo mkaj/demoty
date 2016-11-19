@@ -15,6 +15,7 @@ H = 522
 def getRandomImage():
     fileList = []
     for dirpath, dirnames, filenames in os.walk('.'):
+        if TEMPLATE_FILENAME in filenames: filenames.remove(TEMPLATE_FILENAME)
         for filename in [f for f in filenames if f.endswith('.jpg') or f.endswith('.png')]:
             fileList.append(filename)
     return fileList[randint(0, len(fileList) - 1)]
