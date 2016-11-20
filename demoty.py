@@ -4,6 +4,8 @@ from random import randint
 
 TEMPLATE_FILENAME = 'template.jpg'
 PHRASES_FILENAME = 'phrases.txt'
+IMAGES_DIRECTORY = 'images'
+
 EXTENSIONS = ['.jpg', '.png']
 
 UPPER_FONT = 'times.ttf'
@@ -24,10 +26,10 @@ def isValidExtension(filename):
 
 def getRandomImage():
     fileList = []
-    for dirpath, dirnames, filenames in os.walk('.'):
+    for dirpath, dirnames, filenames in os.walk('images'):
         if TEMPLATE_FILENAME in filenames: filenames.remove(TEMPLATE_FILENAME)
         for filename in [f for f in filenames if isValidExtension(f)]:
-            fileList.append(filename)
+            fileList.append(os.path.join(IMAGES_DIRECTORY, filename))
     return PIL.Image.open(fileList[randint(0, len(fileList) - 1)])
 
 def getPhrases():
