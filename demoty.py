@@ -49,7 +49,7 @@ def getSizeFromArea(area):
 
 def makeImage():
     frame = PIL.Image.open(TEMPLATE_FILENAME)
-    demot = PIL.Image.open(getRandomImage())
+    demot = getRandomImage()
     demot = demot.resize(getSizeFromArea(TEMPLATE_COORDS), PIL.Image.ANTIALIAS)
     frame.paste(demot, TEMPLATE_COORDS)
 
