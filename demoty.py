@@ -26,7 +26,7 @@ def isValidExtension(filename):
 
 def getRandomImage():
     fileList = []
-    for dirpath, dirnames, filenames in os.walk('images'):
+    for dirpath, dirnames, filenames in os.walk(IMAGES_DIRECTORY):
         if TEMPLATE_FILENAME in filenames: filenames.remove(TEMPLATE_FILENAME)
         for filename in [f for f in filenames if isValidExtension(f)]:
             fileList.append(os.path.join(IMAGES_DIRECTORY, filename))
