@@ -9,11 +9,12 @@ EXTENSIONS = ['.jpg', '.png']
 UPPER_FONT = 'times.ttf'
 UPPER_SIZE = 45
 LOWER_FONT = 'arialbd.ttf'
-LOWER_SIZE = 15
+LOWER_SIZE = 14
 
 TEMPLATE_WIDTH = 574
 TEMPLATE_HEIGHT = 522
 TEMPLATE_COORDS = (75, 45, 499, 373)
+PADDING = 10
 
 def isValidExtension(filename):
     for extension in EXTENSIONS:
@@ -42,7 +43,14 @@ def drawXAxisCenteredText(image, text, font, size, pos_y):
     draw = ImageDraw.Draw(image)
     textFont = ImageFont.truetype(font, size)
     textWidth = textFont.getsize(text)[0]
-    draw.text(((TEMPLATE_WIDTH - textWidth)/2,pos_y), text, font = textFont)
+
+    i = 1
+    while textWidth >= TEMPLATE_WIDTH - PADDING:
+        textFont = ImageFont.truetype(font, size - i)
+        textWidth = textFont.getsize(text)[0]
+        i += 1
+        
+    draw.text(((TEMPLATE_WIDTH - textWidth) / 2, pos_y), text, font = textFont)
 
 def getSizeFromArea(area):
     return (area[2] - area[0], area[3] - area[1])
