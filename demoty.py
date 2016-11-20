@@ -8,7 +8,7 @@ PHRASES_FILENAME = 'phrases.txt'
 EXTENSIONS = ['.jpg', '.png']
 
 UPPER_FONT = 'times.ttf'
-LOWER_FONT = 'arial.ttf'
+LOWER_FONT = 'arialbd.ttf'
 
 W = 574
 H = 522
@@ -50,9 +50,9 @@ def makeImage():
     draw.text((int((W-w)/2),390), upperText, font=upperTextFont)
 
     lowerText = getRandomPhrase()
-    lowerTextFont = ImageFont.truetype(LOWER_FONT, 16)
+    lowerTextFont = ImageFont.truetype(LOWER_FONT, 15)
     w, h = lowerTextFont.getsize(lowerText)
-    draw.text((int((W-w)/2),460), lowerText, font=lowerTextFont)
+    draw.text((int((W-w)/2),450), lowerText, font=lowerTextFont)
     
     frame.show()
 
