@@ -3,15 +3,17 @@ from PIL import ImageEnhance, Image, ImageOps, ImageDraw, ImageFont
 from random import randint
 
 TEMPLATE_FILENAME = 'template.jpg'
-TEMPLATE_COORDS = (75, 45, 499, 373)
 PHRASES_FILENAME = 'phrases.txt'
 EXTENSIONS = ['.jpg', '.png']
 
 UPPER_FONT = 'times.ttf'
+UPPER_SIZE = 45
 LOWER_FONT = 'arialbd.ttf'
+LOWER_SIZE = 15
 
-W = 574
-H = 522
+TEMPLATE_WIDTH = 574
+TEMPLATE_HEIGHT = 522
+TEMPLATE_COORDS = (75, 45, 499, 373)
 
 def isValidExtension(filename):
     for extension in EXTENSIONS:
@@ -25,7 +27,7 @@ def getRandomImage():
         if TEMPLATE_FILENAME in filenames: filenames.remove(TEMPLATE_FILENAME)
         for filename in [f for f in filenames if isValidExtension(f)]:
             fileList.append(filename)
-    return fileList[randint(0, len(fileList) - 1)]
+    return PIL.Image.open(fileList[randint(0, len(fileList) - 1)])
 
 def getPhrases():
     with open(PHRASES_FILENAME) as file:
@@ -36,23 +38,23 @@ def getRandomPhrase():
     phraseList = getPhrases()
     return phraseList[randint(0, len(phraseList) - 1)]
 
+def drawXAxisCenteredText(image, text, font, size, pos_y):
+    draw = ImageDraw.Draw(image)
+    textFont = ImageFont.truetype(font, size)
+    textWidth = textFont.getsize(text)[0]
+    draw.text(((TEMPLATE_WIDTH - textWidth)/2,pos_y), text, font = textFont)
+
+def getSizeFromArea(area):
+    return (area[2] - area[0], area[3] - area[1])
+
 def makeImage():
     frame = PIL.Image.open(TEMPLATE_FILENAME)
     demot = PIL.Image.open(getRandomImage())
-    demot = demot.resize((TEMPLATE_COORDS[2] - TEMPLATE_COORDS[0], TEMPLATE_COORDS[3] - TEMPLATE_COORDS[1]), PIL.Image.ANTIALIAS)
+    demot = demot.resize(getSizeFromArea(TEMPLATE_COORDS), PIL.Image.ANTIALIAS)
     frame.paste(demot, TEMPLATE_COORDS)
 
-    draw = ImageDraw.Draw(frame)
-
-    upperText = getRandomPhrase()
-    upperTextFont = ImageFont.truetype(UPPER_FONT, 45)
-    w, h = upperTextFont.getsize(upperText)
-    draw.text((int((W-w)/2),390), upperText, font=upperTextFont)
-
-    lowerText = getRandomPhrase()
-    lowerTextFont = ImageFont.truetype(LOWER_FONT, 15)
-    w, h = lowerTextFont.getsize(lowerText)
-    draw.text((int((W-w)/2),450), lowerText, font=lowerTextFont)
+    drawXAxisCenteredText(frame, getRandomPhrase(), UPPER_FONT, UPPER_SIZE, 390)
+    drawXAxisCenteredText(frame, getRandomPhrase(), LOWER_FONT, LOWER_SIZE, 450)
     
     frame.show()
 
