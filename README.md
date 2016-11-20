@@ -4,4 +4,4 @@ funny image generator
 
 example:
 
-![jamnik smieszny](http://i.imgur.com/obgvJUW.jpg)
+![jamnik smieszny](https://i.imgur.com/r763tjd.png)
