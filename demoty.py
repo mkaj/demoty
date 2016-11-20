@@ -1,5 +1,5 @@
 import PIL, os
-from PIL import ImageEnhance, Image, ImageOps, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont
 from random import randint
 
 TEMPLATE_FILENAME = 'template.jpg'
