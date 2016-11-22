@@ -1,14 +1,13 @@
 import PIL, os
 from PIL import Image, ImageDraw, ImageFont
-from random import randint
+import random
 
 TEMPLATE_FILENAME = 'template.jpg'
 PHRASES_FILENAME = 'phrases.txt'
 IMAGES_DIRECTORY = 'images'
+EXTENSIONS = ['.jpg', '.png']
 
 RESULT_FILENAME = 'result.jpg'
-
-EXTENSIONS = ['.jpg', '.png']
 
 UPPER_FONT = 'times.ttf'
 UPPER_SIZE = 45
@@ -34,27 +33,22 @@ def getRandomImage():
         if TEMPLATE_FILENAME in filenames: filenames.remove(TEMPLATE_FILENAME)
         for filename in [f for f in filenames if isValidExtension(f)]:
             fileList.append(os.path.join(IMAGES_DIRECTORY, filename))
-    return PIL.Image.open(fileList[randint(0, len(fileList) - 1)])
-
-def getPhrases():
-    with open(PHRASES_FILENAME) as file:
-        content = file.read().splitlines()
-    return content
+    return PIL.Image.open(random.choice(fileList))
 
 def getRandomPhrase():
-    phraseList = getPhrases()
-    return phraseList[randint(0, len(phraseList) - 1)]
+    with open(PHRASES_FILENAME) as file:
+        content = file.read().splitlines()
+    return random.choice(content)
 
 def drawXAxisCenteredText(image, text, font, size, pos_y):
     draw = ImageDraw.Draw(image)
     textFont = ImageFont.truetype(font, size)
     textWidth = textFont.getsize(text)[0]
 
-    i = 1
-    while textWidth >= TEMPLATE_WIDTH - PADDING:
-        textFont = ImageFont.truetype(font, size - i)
+    while textWidth >= TEMPLATE_WIDTH - PADDING * 2:
+        textFont = ImageFont.truetype(font, size)
         textWidth = textFont.getsize(text)[0]
-        i += 1
+        size -= 1
     
     draw.text(((TEMPLATE_WIDTH - textWidth) / 2, pos_y), text, font = textFont)
 
@@ -68,9 +62,11 @@ def makeImage():
     frame.paste(demot, TEMPLATE_COORDS)
 
     drawXAxisCenteredText(frame, getRandomPhrase(),
-                          UPPER_FONT, UPPER_SIZE, UPPER_FONT_Y)
+                          UPPER_FONT, UPPER_SIZE,
+                          UPPER_FONT_Y)
     drawXAxisCenteredText(frame, getRandomPhrase(),
-                          LOWER_FONT, LOWER_SIZE, LOWER_FONT_Y)
+                          LOWER_FONT, LOWER_SIZE,
+                          LOWER_FONT_Y)
 
     frame.save(RESULT_FILENAME)
     frame.show()
