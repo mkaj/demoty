@@ -67,8 +67,10 @@ def makeImage():
     demot = demot.resize(getSizeFromArea(TEMPLATE_COORDS), PIL.Image.ANTIALIAS)
     frame.paste(demot, TEMPLATE_COORDS)
 
-    drawXAxisCenteredText(frame, getRandomPhrase(), UPPER_FONT, UPPER_SIZE, UPPER_FONT_Y)
-    drawXAxisCenteredText(frame, getRandomPhrase(), LOWER_FONT, LOWER_SIZE, LOWER_FONT_Y)
+    drawXAxisCenteredText(frame, getRandomPhrase(),
+                          UPPER_FONT, UPPER_SIZE, UPPER_FONT_Y)
+    drawXAxisCenteredText(frame, getRandomPhrase(),
+                          LOWER_FONT, LOWER_SIZE, LOWER_FONT_Y)
 
     frame.save(RESULT_FILENAME)
     frame.show()
