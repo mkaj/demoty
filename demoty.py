@@ -6,6 +6,8 @@ TEMPLATE_FILENAME = 'template.jpg'
 PHRASES_FILENAME = 'phrases.txt'
 IMAGES_DIRECTORY = 'images'
 
+RESULT_FILENAME = 'result.jpg'
+
 EXTENSIONS = ['.jpg', '.png']
 
 UPPER_FONT = 'times.ttf'
@@ -67,7 +69,8 @@ def makeImage():
 
     drawXAxisCenteredText(frame, getRandomPhrase(), UPPER_FONT, UPPER_SIZE, UPPER_FONT_Y)
     drawXAxisCenteredText(frame, getRandomPhrase(), LOWER_FONT, LOWER_SIZE, LOWER_FONT_Y)
-    
+
+    frame.save(RESULT_FILENAME)
     frame.show()
 
 if __name__ == '__main__':
